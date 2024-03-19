@@ -86,8 +86,28 @@ public class DepartmentDaoJDBC implements DepartmentDao {
 
     @Override
     public Department findById(Integer id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findById'");
+        PreparedStatement st = null;
+        ResultSet rs = null;
+        try {
+            st = conn.prepareStatement(
+                "SELECT * FROM department "
+                + "WHERE Id = ?"
+            );
+            st.setInt(1, id);
+            rs = st.executeQuery();
+            if (rs.next()) {
+                Department dep = instantiateDepartment(rs);
+                return dep;
+            }
+            return null;
+        }
+        catch (SQLException e) {
+            throw new DbExcepetion(e.getMessage());
+        }
+        finally {
+            DB.closeResultSet(rs);
+            DB.closeStatement(st);
+        }
     }
 
     public Department instantiateDepartment(ResultSet rs) throws SQLException {

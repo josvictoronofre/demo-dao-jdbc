@@ -26,11 +26,15 @@ public class App2 {
         departmentDao.update(dp);
         System.out.println("Department updated!");
 
-        System.out.println("-- Test 3 - Department deleteById --");
+        System.out.println("-- Test 3 - Department findById");
+        Department answer = new Department(dp.getId(), dp.getName());
+        System.out.println(answer);
+
+        System.out.println("-- Test 4 - Department deleteById --");
         departmentDao.deleteById(dp.getId());
         System.out.println("Department deleted!");
 
-        System.out.println("-- Test 4 - Department findAll --");
+        System.out.println("-- Test 5 - Department findAll --");
         list = departmentDao.findAll();
         for (Department d : list) {
             System.out.println(d);
